@@ -1,0 +1,15 @@
+"D:\IAR\arm\bin\armproc.dll" 
+
+"D:\IAR\arm\bin\armstlink2.dll" 
+
+"C:\Users\64327\Desktop\can_test\Debug\Exe\OWN.out" 
+
+--plugin "D:\IAR\arm\bin\armbat.dll" 
+
+--device_macro "D:\IAR\arm\config\debugger\ST\STM32F1xx_XL.dmac" 
+
+--flash_loader "D:\IAR\arm\config\flashloader\ST\FlashSTM32F10xx6.board" 
+
+
+
+
