@@ -24,6 +24,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x_it.h"
 #include "stm32f10x_can.h"
+#include "CANServe.h"
 
 /** @addtogroup STM32F10x_StdPeriph_Template
   * @{
@@ -217,25 +218,11 @@ extern CanTxMsg TxMessage;
 uint32_t TX=0;
 uint32_t RX=0;
 
+extern void CAN_IRQCallBack(void);
+
 void CAN_RX_IRQHandler(void)
 {
-	/*´ÓÓÊÏäÖÐ¶Á³ö±¨ÎÄ*/
-	CAN_Receive(CANx, CAN_FIFO0, &RxMessage);
-        RX++;
-
-	/* ±È½ÏIDÊÇ·ñÎª0x1314 */ 
-	if((RxMessage.StdId==0x111) && (RxMessage.IDE==CAN_ID_STD) && (RxMessage.DLC==8) )
-	{
-	flag = 1; 					       //½ÓÊÕ³É¹¦  
-                        CAN_SetMsg(&TxMessage);
-                CAN_Transmit(CANx, &TxMessage);
-                
-                TX++;
-	}
-	else
-	{
-	flag = 0; 					   //½ÓÊÕÊ§°Ü
-	}
+  CAN_IRQCallBack(void);
 }
 
 /**
