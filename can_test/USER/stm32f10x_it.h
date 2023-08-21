@@ -69,6 +69,8 @@ extern uint8_t Usart2_recv_state;
 
 extern uint16_t timer;
 
+extern uint8_t radar_state[8];
+
 struct CONFIG
 {
     uint8_t state;//地址配置状态

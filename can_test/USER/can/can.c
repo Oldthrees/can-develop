@@ -125,7 +125,7 @@ void CAN_SetMsg(CanTxMsg *TxMessage)
 {	  
     uint8_t ubCounter = 0;
 
-    TxMessage->StdId=0x111;						 
+    TxMessage->StdId=0x222;						 
 //    TxMessage->ExtId=0x1288;
     TxMessage->IDE=CAN_ID_STD;
     TxMessage->RTR=CAN_RTR_DATA;

@@ -153,32 +153,34 @@ void  TIM1_UP_IRQHandler (void)
         TIM_ClearITPendingBit(TIM1 , TIM_FLAG_Update); 
         
         timer++;
-
-        if(config.state == 1)
-        {
-            if(timer == 1000)
-            {
-                LED_STATE_HIGH;
-            }
-            else if(timer == 2000)
-            {
-                LED_STATE_LOW;
-                timer = 0;
-            }
-        }
-        else
-        {
-            if(timer == 200)
-            {
-                LED_STATE_HIGH;
-            }
-            else if(timer == 400)
-            {
-                LED_STATE_LOW;
-                timer = 0;
-            }
-        }
     }		 	
+}
+
+uint8_t Usart1_RecvBuffer[100];
+int Usart1_RecvPointer = 0;
+uint8_t Usart1_recv_state = FREE;
+
+//串口1中断服务程序  
+void USART1_IRQHandler(void)  
+{        
+    //接收中断  
+    if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)  
+    {     
+        //清空串口接收标记  
+        USART_ClearITPendingBit(USART1, USART_IT_RXNE);  
+          
+        //获取缓冲区数据       
+        Usart1_RecvBuffer[Usart1_RecvPointer++] = USART_ReceiveData(USART1);  
+
+        Usart1_recv_state=RECEVING;
+    }  
+    else if(USART_GetFlagStatus(USART1, USART_FLAG_IDLE) != RESET)
+    {
+        USART1->SR;
+        USART1->DR;
+
+        Usart1_recv_state=FINISH;
+    }
 }
 
 uint8_t Usart2_RecvBuffer[100];
@@ -222,7 +224,7 @@ void CAN_RX_IRQHandler(void)
         RX++;
 
 	/* ±È½ÏIDÊÇ·ñÎª0x1314 */ 
-	if((RxMessage.StdId==0x131) && (RxMessage.IDE==CAN_ID_STD) && (RxMessage.DLC==8) )
+	if((RxMessage.StdId==0x111) && (RxMessage.IDE==CAN_ID_STD) && (RxMessage.DLC==8) )
 	{
 	flag = 1; 					       //½ÓÊÕ³É¹¦  
                         CAN_SetMsg(&TxMessage);
