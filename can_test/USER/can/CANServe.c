@@ -47,11 +47,11 @@ void CANFilterConfig_IdMask_StandardIdOnly(void)
 }
 
 /*
- * 0: success, -1: busy, -2: timeout, -3: send error, -4: Transmit timeout
+ * 0: success, 1: fail
  */
 uint8_t CAN_Send_Cyc(uint8_t index){
 	uint8_t ret = 1;
-	uint8_t i;
+	uint8_t mailbox;
 	CanTxMsg can_msg_sed;
 	uint8_t Dat_Sed[8];
 
@@ -64,13 +64,19 @@ uint8_t CAN_Send_Cyc(uint8_t index){
 		can_msg_sed.DLC = mTMsgAttr[index].uLen;
 		memcpy((void *)Dat_Sed, (void *)&mTxDat1, 8);
 		can_msg_sed.DATA = (uint8_t *)Dat_Sed;
-		ret = CAN_Transmit(CANx, &TxMessage);
+		mailbox = CAN_Transmit(CANx, &TxMessage);
 		break;
 	default:
 		ret = 1;
 		break;
 	}
 
+	//last time success?
+	if(CANx->TSR | (0x02 << (mailbox * 8))){
+		ret = 0;
+	}else{
+		ret = 1;
+	}
 	return ret;
 }
 
@@ -146,18 +152,18 @@ void CAN_IRQCallBack(void)
 	uint8_t i;
 
 	//上电禁止100ms
-	if(PwrOnDis == DIAGEN){
-		//busoff
-		if (wpara & CAN_CTRL1_EIF_Msk){
-			BusOff = 1;
-		}
-		//总线错误
-		if(wpara & CAN_CTRL1_BEIF_Msk){
-			CanBusErr = lpara;
-		}
-	}else{
+	// if(PwrOnDis == DIAGEN){
+	// 	//busoff
+	// 	if (wpara & CAN_CTRL1_EIF_Msk){
+	// 		BusOff = 1;
+	// 	}
+	// 	//总线错误
+	// 	if(wpara & CAN_CTRL1_BEIF_Msk){
+	// 		CanBusErr = lpara;
+	// 	}
+	// }else{
 
-	}
+	// }
 
 	BusOff = 0;
 	CAN_Receive(CANx, CAN_FIFO0, &can_msg_rec);

@@ -146,6 +146,7 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 uint16_t timer = 0;
+extern sSysTim mSysTim;
 
 void  TIM1_UP_IRQHandler (void)
 {
@@ -154,6 +155,8 @@ void  TIM1_UP_IRQHandler (void)
         TIM_ClearITPendingBit(TIM1 , TIM_FLAG_Update); 
         
         timer++;
+        mSysTim.u16msTimer++;
+        mSysTim.u32msTimer++;
     }		 	
 }
 

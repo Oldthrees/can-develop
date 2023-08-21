@@ -1,4 +1,5 @@
 #include <can.h>
+#include "CANServe.h"
 
 //CANµƒGPIO≈‰÷√
 static void CAN_GPIO_Config(void)
@@ -101,7 +102,8 @@ void CAN_Config(void)
     CAN_GPIO_Config();
     CAN_NVIC_Config();
     CAN_Mode_Config();
-    CAN_Filter_Config();   
+//    CAN_Filter_Config();
+    CANFilterConfig_IdMask_StandardIdOnly();   
 }
 
 void Init_RxMes(CanRxMsg *RxMessage)

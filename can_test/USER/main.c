@@ -1,12 +1,21 @@
 #include "stm32f10x.h"
 #include <stdio.h>
 #include "stm32f10x_it.h" 
+#include "CANServe.h"
 
 struct CONFIG config;
 
 uint8_t addr = 0;//地址
 
 uint8_t radar_state[8] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+
+typedef struct{
+    uint16_t u16msTimer;
+    uint16_t res;
+    uint32_t u32msTimer;
+}sSysTim;
+
+sSysTim mSysTim;
 
 uint8_t flag = 0;
 CanTxMsg TxMessage;
@@ -28,6 +37,7 @@ void main(void)
 
         
         uart_recv();
+        CAN_Task_Sched();
         
 //        CAN_SetMsg(&TxMessage);
 //        CAN_Transmit(CANx, &TxMessage);
