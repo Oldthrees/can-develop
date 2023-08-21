@@ -5,11 +5,12 @@
  *      Author: ly
  */
 
-#ifndef USER_SIGNAL_CFG_H_
-#define USER_SIGNAL_CFG_H_
+#ifndef _SIGNAL_CFG_H_
+#define _SIGNAL_CFG_H_
 
-#include "typedefs.h"
-#include "config.h"
+#include "stm32f10x.h"
+//#include "typedefs.h"
+//#include "config.h"
 
 typedef union{
 	struct{

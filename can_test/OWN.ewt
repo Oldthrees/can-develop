@@ -2540,6 +2540,12 @@
             <name>$PROJ_DIR$\USER\can\can.c</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\USER\can\CANMsg_cfg.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\USER\can\CANServe.c</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\USER\delay\delay.c</name>
         </file>
         <file>
@@ -2550,6 +2556,9 @@
         </file>
         <file>
             <name>$PROJ_DIR$\USER\port\port.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\USER\can\Signal_cfg.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\USER\stm32f10x_conf.h</name>

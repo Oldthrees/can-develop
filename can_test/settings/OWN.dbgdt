@@ -882,7 +882,7 @@
                     <item>radar_state</item>
                     <item>Usart2_RecvBuffer</item>
                     <item>Usart2_RecvPointer</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>

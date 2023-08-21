@@ -23,9 +23,9 @@
 
 if ($debugfile -eq "")
 {
-& "D:\IAR\common\bin\cspybat" -f "C:\Users\64327\Desktop\明璟庭智能家居相关\home_radar\settings\OWN.Debug.general.xcl" --backend -f "C:\Users\64327\Desktop\明璟庭智能家居相关\home_radar\settings\OWN.Debug.driver.xcl" 
+& "D:\IAR\common\bin\cspybat" -f "F:\Git_code\CAN\can_test\settings\OWN.Debug.general.xcl" --backend -f "F:\Git_code\CAN\can_test\settings\OWN.Debug.driver.xcl" 
 }
 else
 {
-& "D:\IAR\common\bin\cspybat" -f "C:\Users\64327\Desktop\明璟庭智能家居相关\home_radar\settings\OWN.Debug.general.xcl" --debug_file=$debugfile --backend -f "C:\Users\64327\Desktop\明璟庭智能家居相关\home_radar\settings\OWN.Debug.driver.xcl" 
+& "D:\IAR\common\bin\cspybat" -f "F:\Git_code\CAN\can_test\settings\OWN.Debug.general.xcl" --debug_file=$debugfile --backend -f "F:\Git_code\CAN\can_test\settings\OWN.Debug.driver.xcl" 
 }

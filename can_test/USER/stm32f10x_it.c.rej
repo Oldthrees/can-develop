@@ -1,0 +1,9 @@
+diff a/can_test/USER/stm32f10x_it.c b/can_test/USER/stm32f10x_it.c	(rejected hunks)
+@@ -24,6 +24,7 @@
+ /* Includes ------------------------------------------------------------------*/
+ #include "stm32f10x_it.h"
+ #include "stm32f10x_can.h"
++#include "CANServe.h"
+ 
+ /** @addtogroup STM32F10x_StdPeriph_Template
+   * @{

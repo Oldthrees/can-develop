@@ -5,9 +5,10 @@
  *      Author: ly
  */
 
-#ifndef USER_CANSERVE_H_
-#define USER_CANSERVE_H_
+#ifndef _CANSERVE_H_
+#define _CANSERVE_H_
 
+#include "stm32f10x.h"
 #include <stdio.h>
 #include <can.h>
 #include "CANMsg_cfg.h"
@@ -17,7 +18,7 @@
 #define DIAGEN			0x55
 #define BUSOFF_FILT_TIM		500
 
-//can总线错�??类型
+//can总线错误类型
 typedef enum{
 	NoErr = 0,		//没错误
 	BitErr,			//位错误

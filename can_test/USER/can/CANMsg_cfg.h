@@ -5,10 +5,10 @@
  *      Author: ly
  */
 
-#ifndef USER_CANMSG_CFG_H_
-#define USER_CANMSG_CFG_H_
+#ifndef __CANMSG_CFG_H_
+#define __CANMSG_CFG_H_
 
-#include <stdio.h>
+#include "stm32f10x.h"
 
 #define RX_MSG_NUM		2
 #define TX_MSG_NUM		5

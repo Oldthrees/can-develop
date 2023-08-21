@@ -1,4 +1,4 @@
-"F:\Git_code\CAN\can_test\USER\main.c"
+"F:\Git_code\CAN\can_test\USER\can\Signal_cfg.c"
 -std=c11
 -ferror-limit=0
 -I
