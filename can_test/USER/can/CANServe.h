@@ -29,6 +29,14 @@ typedef enum{
 	OthErr,			//其它错误
 }eKoer;
 
+typedef struct{
+    uint16_t u16msTimer;
+    uint16_t res;
+    uint32_t u32msTimer;
+}sSysTim;
+
+extern sSysTim mSysTim;
+
 extern eKoer CanBusErr;
 extern uint8_t BusOff;
 extern uint8_t BusOffFilt;

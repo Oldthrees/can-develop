@@ -13,7 +13,7 @@ uint16_t MsgMissCnt[RX_MSG_NUM];
 const uint16_t MsgMissed[RX_MSG_NUM] = {500,500};
 
 sCANMsg_attribute mTMsgAttr[TX_MSG_NUM] = {
-		[eTxMsg1]
+		[eTxMsg1] =
 		 {
 			.uID = 0x111,
 			.uLen = 8,
@@ -21,7 +21,7 @@ sCANMsg_attribute mTMsgAttr[TX_MSG_NUM] = {
 			.uEvent = 0,
 			.mask = 0x00000000,
 		 },
-		 [eTxMsg2]
+		 [eTxMsg2] =
 		 {
 			.uID = 0x222,
 			.uLen = 8,
@@ -29,7 +29,7 @@ sCANMsg_attribute mTMsgAttr[TX_MSG_NUM] = {
 			.uEvent = 0,
 			.mask = 0x00000000,
 		 },
-		 [eTxMsg3]
+		 [eTxMsg3] =
 		 {
 			.uID = 0x333,
 			.uLen = 8,
@@ -37,7 +37,7 @@ sCANMsg_attribute mTMsgAttr[TX_MSG_NUM] = {
 			.uEvent = 0,
 			.mask = 0x00000000,
 		 },
-		 [eTxMsg4]
+		 [eTxMsg4] =
 		 {
 			.uID = 0x444,
 			.uLen = 8,
@@ -45,7 +45,7 @@ sCANMsg_attribute mTMsgAttr[TX_MSG_NUM] = {
 			.uEvent = 0,
 			.mask = 0x00000000,
 		 },
-		 [eTxMsg5]
+		 [eTxMsg5] =
 		 {
 			.uID = 0x555,
 			.uLen = 8,
@@ -56,7 +56,7 @@ sCANMsg_attribute mTMsgAttr[TX_MSG_NUM] = {
 };
 
 sCANMsg_attribute mRMsgAttr[RX_MSG_NUM] = {
-		[eRxMsg1]
+		[eRxMsg1] =
 		 {
 			.uID = 0x131,
 			.uLen = 8,
@@ -64,7 +64,7 @@ sCANMsg_attribute mRMsgAttr[RX_MSG_NUM] = {
 			.uEvent = 0,
 			.mask = 0x00000000,
 		 },
-		 [eRxMsg2]
+		 [eRxMsg2] =
 		 {
 			.uID = 0x141,
 			.uLen = 8,

@@ -146,7 +146,6 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 uint16_t timer = 0;
-extern sSysTim mSysTim;
 
 void  TIM1_UP_IRQHandler (void)
 {
@@ -225,7 +224,7 @@ extern void CAN_IRQCallBack(void);
 
 void CAN_RX_IRQHandler(void)
 {
-  CAN_IRQCallBack(void);
+  CAN_IRQCallBack();
 }
 
 /**

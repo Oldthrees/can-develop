@@ -9,14 +9,6 @@ uint8_t addr = 0;//地址
 
 uint8_t radar_state[8] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 
-typedef struct{
-    uint16_t u16msTimer;
-    uint16_t res;
-    uint32_t u32msTimer;
-}sSysTim;
-
-sSysTim mSysTim;
-
 uint8_t flag = 0;
 CanTxMsg TxMessage;
 CanRxMsg RxMessage;	
@@ -38,6 +30,12 @@ void main(void)
         
         uart_recv();
         CAN_Task_Sched();
+        
+        if(mRxDat1.bits.bit0){
+          mTxDat1.bits.bit1 = 1;
+        }else{
+          mTxDat1.bits.bit1 = 0;
+        }       
         
 //        CAN_SetMsg(&TxMessage);
 //        CAN_Transmit(CANx, &TxMessage);

@@ -15,16 +15,18 @@ uint8_t BusOffFilt = 0;
 uint8_t PwrOnDis = 0;
 eKoer CanBusErr;
 
+sSysTim mSysTim;
+
 void CANFilterConfig_IdMask_StandardIdOnly(void)
 {
 	//CAN_FilterConfTypeDef  sFilterConfig;
-	CAN_FilterTypeDef sFilterConfig;
+	CAN_FilterInitTypeDef sFilterConfig;
 	uint16_t		mask,tmp,i;
 
-	sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK; 	//配置为掩码模式
-	sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;	//设置为32位宽
-	sFilterConfig.FilterIdHigh =(StdIdArray[0]<<5);		//验证码可以设置为StdIdArray[]数组中任意一个，这里使用StdIdArray[0]作为验证码
-	sFilterConfig.FilterIdLow =0;
+	sFilterConfig.CAN_FilterMode = CAN_FilterMode_IdMask; 	//配置为掩码模式
+	sFilterConfig.CAN_FilterScale = CAN_FilterScale_32bit;	//设置为32位宽
+	sFilterConfig.CAN_FilterIdHigh =(mRMsgAttr[0].uID<<5);		//验证码可以设置为StdIdArray[]数组中任意一个，这里使用StdIdArray[0]作为验证码
+	sFilterConfig.CAN_FilterIdLow =0;
 
 	mask =0x7ff;						//下面开始计算屏蔽码
 	for(i =0; i<RX_MSG_NUM; i++) 	//屏蔽码位StdIdArray[]数组中所有成员的同或结果
@@ -32,14 +34,14 @@ void CANFilterConfig_IdMask_StandardIdOnly(void)
 	tmp =mRMsgAttr[i].uID ^ (~mRMsgAttr[0].uID);	//所有数组成员与第0个成员进行同或操作
 	mask &=tmp;
 	}
-	sFilterConfig.FilterMaskIdHigh =(mask<<5);
-	sFilterConfig.FilterMaskIdLow =0|0x02;		//只接收数据帧
+	sFilterConfig.CAN_FilterMaskIdHigh =(mask<<5);
+	sFilterConfig.CAN_FilterMaskIdLow =0|0x02;		//只接收数据帧
 
-	sFilterConfig.FilterFIFOAssignment = CAN_FILTER_FIFO0;		//设置通过的数据帧进入到FIFO0中
-	sFilterConfig.FilterActivation = ENABLE;						//激活过滤器
-	sFilterConfig.FilterBank = 0; 		 //过滤器0     0~13 数字越小，优先级越高
+	sFilterConfig.CAN_FilterFIFOAssignment = CAN_Filter_FIFO0;		//设置通过的数据帧进入到FIFO0中
+	sFilterConfig.CAN_FilterActivation = ENABLE;						//激活过滤器
+//	sFilterConfig.FilterBank = 0; 		 //过滤器0     0~13 数字越小，优先级越高
 
-	CAN_FilterInit(&CAN_FilterInitStructure);
+	CAN_FilterInit(&sFilterConfig);
 
 	/*CAN通讯中断使能*/
 	CAN_ITConfig(CANx, CAN_IT_FMP0, ENABLE);
@@ -53,18 +55,22 @@ uint8_t CAN_Send_Cyc(uint8_t index){
 	uint8_t ret = 1;
 	uint8_t mailbox;
 	CanTxMsg can_msg_sed;
-	uint8_t Dat_Sed[8];
 
 	can_msg_sed.IDE = CAN_ID_STD;
 	can_msg_sed.RTR = CAN_RTR_DATA;
 
 	switch(index){
 	case eTxMsg1:
-		can_msg_sed.ID = mTMsgAttr[index].uID;
+		can_msg_sed.StdId = mTMsgAttr[index].uID;
 		can_msg_sed.DLC = mTMsgAttr[index].uLen;
-		memcpy((void *)Dat_Sed, (void *)&mTxDat1, 8);
-		can_msg_sed.DATA = (uint8_t *)Dat_Sed;
-		mailbox = CAN_Transmit(CANx, &TxMessage);
+		memcpy((void *)can_msg_sed.Data, (void *)&mTxDat1, 8);
+		mailbox = CAN_Transmit(CANx, &can_msg_sed);
+		break;
+        case eTxMsg2:
+		can_msg_sed.StdId = mTMsgAttr[index].uID;
+		can_msg_sed.DLC = mTMsgAttr[index].uLen;
+		memcpy((void *)can_msg_sed.Data, (void *)&mTxDat2, 8);
+		mailbox = CAN_Transmit(CANx, &can_msg_sed);
 		break;
 	default:
 		ret = 1;
@@ -168,7 +174,7 @@ void CAN_IRQCallBack(void)
 	BusOff = 0;
 	CAN_Receive(CANx, CAN_FIFO0, &can_msg_rec);
 	for(i=0;i<RX_MSG_NUM;i++){
-		if(can_msg_rec.ID == mRMsgAttr[i].uID){
+		if(can_msg_rec.StdId == mRMsgAttr[i].uID){
 			Msg_Miss_Reset(i);
 			switch(i){
 			case eRxMsg1:
